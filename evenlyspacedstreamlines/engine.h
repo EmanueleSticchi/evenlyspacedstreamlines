@@ -14,6 +14,8 @@
 #include "triangularmesh.h"
 #include <vector>
 
+#include <string>   // For std::string
+#include <sstream>  // For std::ostringstream
 
 //-----------------------------------------------------------------------------
 class StreamlineEngine {
@@ -47,6 +49,7 @@ public:
     double neighborhood_mean_size;
     unsigned int saved_random_seed;
     int error_code;
+    std::string error_message;
 
     int generate_seed_points();
     SegmentDeque* optimize_streamline(int nb_seeds);
