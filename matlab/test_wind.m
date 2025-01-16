@@ -37,41 +37,45 @@ w_uns_cell = Fw(centers(:,1),centers(:,2));
 
 % matlab function
 figure
-subplot 121
+subplot 221
 surf(x(:,:,iz),y(:,:,iz),z(:,:,iz),'FaceColor','none')
 axis tight
 xlabel('x')
 ylabel('y')
 zlabel('z')
 view([0 90])
-subplot 122
+title('Matlab built-in (mesh)')
+subplot 222
 streamslice(x,y,z,u,v,w,[],[],zval)
 axis tight
 xlabel('x')
 ylabel('y')
+title('Matlab built-in')
 
 % streamlines unstructured function
-figure
-subplot 121
+%figure
+subplot 223
 triplot(TR,'k')
 axis tight
 xlabel('x')
 ylabel('y')
-subplot 122
+title('evenly\_spaced\_streamlines (mesh)')
+subplot 224
 lines = evenly_spaced_streamlines([x_uns,y_uns,z_uns],TR.ConnectivityList,...
     [u_uns_cell,v_uns_cell,w_uns_cell],1);
 
 for i=1:length(lines)
     plot3(lines{i,1}(:,1),lines{i,1}(:,2),lines{i,1}(:,3),'b')
     hold on
-    quiver3(lines{i,1}(:,1),lines{i,1}(:,2),lines{i,1}(:,3),...
-        Fu(lines{i,1}(:,1),lines{i,1}(:,2)), Fv(lines{i,1}(:,1),lines{i,1}(:,2)),...
-        Fw(lines{i,1}(:,1),lines{i,1}(:,2)),...
-        'Color','b','AutoScaleFactor',0.5);
+    % quiver3(lines{i,1}(:,1),lines{i,1}(:,2),lines{i,1}(:,3),...
+    %     Fu(lines{i,1}(:,1),lines{i,1}(:,2)), Fv(lines{i,1}(:,1),lines{i,1}(:,2)),...
+    %     Fw(lines{i,1}(:,1),lines{i,1}(:,2)),...
+    %     'Color','b','AutoScaleFactor',0.5);
 end
 axis tight
 xlabel('x')
 ylabel('y')
 zlabel('z')
 view([0 90])
+title('evenly\_spaced\_streamlines')
 
