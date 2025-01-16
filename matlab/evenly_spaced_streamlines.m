@@ -1,26 +1,23 @@
 function lines = evenly_spaced_streamlines(vertices, triangles, orientation, radius,...
-                                    orthogonal, oriented_streamlines, seed_points,...
-                                    seed_region, max_length, avoid_u_turns, max_angle,...
-                                    singularity_mask_radius, allow_tweaking_orientation,...
-                                    random_seed, parallel, num_threads)
+                                    options)
 
 arguments
     vertices (:,3)
     triangles (:,3)
     orientation (:,3)
     radius (1,1)
-    orthogonal=false;
-    oriented_streamlines=true;
-    seed_points=32;
-    seed_region=[];
-    max_length=0;
-    avoid_u_turns=true;
-    max_angle=90;
-    singularity_mask_radius=0.1;
-    allow_tweaking_orientation=true;
-    random_seed=0;
-    parallel=true;
-    num_threads=-1;
+    options.orthogonal=false;
+    options.oriented_streamlines=true;
+    options.seed_points=32;
+    options.seed_region=[];
+    options.max_length=0;
+    options.avoid_u_turns=true;
+    options.max_angle=90;
+    options.singularity_mask_radius=0.1;
+    options.allow_tweaking_orientation=true;
+    options.random_seed=0;
+    options.parallel=true;
+    options.num_threads=-1;
 end
     % # Generate a set of evenly spaced streamlines on a triangulated surface
 
@@ -104,17 +101,15 @@ end
     % # ==========================================================================
 
     % # call C extension
-    %[list_of_lines, list_of_indices, infos] = 
     lines = streamlines_uns(...
         vertices', int32(triangles'-1), orientation', radius,...
-        int32(seed_region),orthogonal,oriented_streamlines,...
-        seed_points, max_length,avoid_u_turns, max_angle,...
-        singularity_mask_radius,allow_tweaking_orientation,...
-        random_seed, parallel,num_threads);
+        int32(options.seed_region),options.orthogonal,options.oriented_streamlines,...
+        options.seed_points,options.max_length,options.avoid_u_turns, options.max_angle,...
+        options.singularity_mask_radius, options.allow_tweaking_orientation,...
+        options.random_seed, options.parallel, options.num_threads);
 
     for i=1:length(lines)
         n          = length(lines{i,1});
         lines{i,1} = reshape(lines{i,1},[3 n/3])'; 
     end
 end
-    % return list_of_lines, list_of_indices, StreamlinesInfos(**infos)
