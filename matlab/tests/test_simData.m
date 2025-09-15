@@ -42,12 +42,20 @@ drawnow
 radius = 1.38e-03; %   
 lines = evenly_spaced_streamlines(triOut.Points,...
             triOut.ConnectivityList,...
-            [vx,vy,vz],radius,"num_threads",2);
+            [vx,vy,vz],radius,"num_threads",4);
+
+% hold on
+% for i=1:length(lines)
+%     plot3(lines{i}(:,1),lines{i}(:,2),lines{i}(:,3),LineWidth=1,Color=[0 0 0])
+% end
 
 hold on
-for i=1:length(lines)
-    plot3(lines{i}(:,1),lines{i}(:,2),lines{i}(:,3),LineWidth=1,Color=[0 0 0])
-end
+Nstreamlines = 25000;
+temp_lines = lines(round(linspace(1,length(lines),Nstreamlines)));
+temp_lines = cellfun(@(c) [c; NaN(1,3)], temp_lines, 'UniformOutput', false);
+temp_lines = vertcat(temp_lines{:});
+p_str_lines = plot3(temp_lines(:,1),temp_lines(:,2),temp_lines(:,3),LineWidth=1,Color=[0 0 0]);
+
 %% FUNCTION
 
 
