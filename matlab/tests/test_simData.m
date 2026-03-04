@@ -38,7 +38,7 @@ cbar.Label.String = 'F_x';
 drawnow
 
 %% PROCESS ----------------------------------------------------------------
-radius = 0.03; % 3 cm  
+radius = 1.38e-03; %0.03; % 3 cm  
 lines = evenly_spaced_streamlines(TestData.Geometry.Points,...
             TestData.Geometry.ConnectivityList,...
             [vx,vy,vz],radius,"num_threads",2);
