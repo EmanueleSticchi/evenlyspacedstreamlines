@@ -71,19 +71,7 @@ end
     % #         computing (default: let OpenMP choose)
     
     % # Returns:
-    % #     streamlines (list of n-by-3 matrices): xyz coordinates of each
-    % #         of the streamlines generated
-    % #     indices (list of (n-1)-arrays): vectors of indices indicating for each
-    % #         line segment of the streamline in which triangle they lie
-    % #     infos (namedtuple): information about streamline generation
-    % #         'lengths' (n-array): length of each streamline;
-    % #         'min_altitude' (float): minimum altitude over all triangles;
-    % #         'max_base' (float): maximum length of the base edge over all 
-    % #             triangles;
-    % #         'neighborhood_size' (float): average number of triangles at 
-    % #             a distance < 'radius' from any triangle
-    % #         'euler_characteristic' (int): = #vertices - #edges + #triangles
-    % #         'random_seed' (int): random seed used for random number generation
+    % #     lines (n-by-3 matrices): xyz coordinates of each of the streamlines separated by NaN.
     % # ==========================================================================
     % # Check inputs =============================================================
     % # ==========================================================================
@@ -110,10 +98,6 @@ end
             options.random_seed, options.parallel, options.num_threads);
     catch ME
         error('Error while calling mex function\n %f \n',ME.message);
-    end
-    for i=1:length(lines)
-        n          = length(lines{i,1});
-        lines{i,1} = reshape(lines{i,1},[3 n/3])'; 
     end
 end
 

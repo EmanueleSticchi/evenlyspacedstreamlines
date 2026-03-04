@@ -1,7 +1,7 @@
 #include "engine.cpp"
 #include "mex.h"
 
-// To compile in matlab: mex filename.cpp CXXFLAGS='$CXXFLAGS -fopenmp' LDFLAGS='$LDFLAGS -fopenmp' -I../evenlyspacedstreamlines
+// To compile in matlab: mex streamlines_uns.cpp CXXFLAGS='$CXXFLAGS -fopenmp' LDFLAGS='$LDFLAGS -fopenmp' -I../evenlyspacedstreamlines
 // To run in matlab prova_mex()
 void mexFunction(int nlhs, mxArray* plhs[], int nrhs, const mxArray* prhs[])
 {
@@ -72,14 +72,42 @@ void mexFunction(int nlhs, mxArray* plhs[], int nrhs, const mxArray* prhs[])
     //mexPrintf("\nRetrieve results\n");
     int ns = engine.get_nb_streamlines();
     //mexPrintf("\nNumber of streamlines = %d\n",ns);
-    plhs[0] = mxCreateCellMatrix(ns, 1);
-    for (int i = 0; i < ns; ++i) {
+    // compute total number of points
+    size_t total_points = 0;
+    
+    for (int i = 0; i < ns; ++i)
+    {
+        total_points += engine.get_streamline_size(i) + 1; // +1 for NaN separator
+    }
+    
+    // create output matrix
+    plhs[0] = mxCreateDoubleMatrix(total_points, 3, mxREAL);
+    double* out = mxGetPr(plhs[0]);
+    
+    size_t idx = 0;
+    
+    for (int i = 0; i < ns; ++i)
+    {
         int n = engine.get_streamline_size(i);
-        mxArray *line = mxCreateDoubleMatrix(3*n, 1, mxREAL);
-        double *lineData = mxGetPr(line);
-        std::vector<int> indices(n - 1);
-        engine.get_streamline(i, lineData, indices.data());
-        mxSetCell(plhs[0], i, line);
+    
+        std::vector<double> lineData(3*n);
+        std::vector<int> indices(n-1);
+    
+        engine.get_streamline(i, lineData.data(), indices.data());
+    
+        for (int k = 0; k < n; ++k)
+        {
+            out[idx + total_points*0] = lineData[3*k + 0];
+            out[idx + total_points*1] = lineData[3*k + 1];
+            out[idx + total_points*2] = lineData[3*k + 2];
+            idx++;
+        }
+    
+        // separator
+        out[idx + total_points*0] = mxGetNaN();
+        out[idx + total_points*1] = mxGetNaN();
+        out[idx + total_points*2] = mxGetNaN();
+        idx++;
     }
 
 }
