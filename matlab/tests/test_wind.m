@@ -64,15 +64,8 @@ title('evenly\_spaced\_streamlines (mesh)')
 subplot 224
 lines = evenly_spaced_streamlines([x_uns,y_uns,z_uns],TR.ConnectivityList,...
     [u_uns_cell,v_uns_cell,w_uns_cell],1);
+plot3(lines(:,1),lines(:,2),lines(:,3),'b')
 
-for i=1:length(lines)
-    plot3(lines{i,1}(:,1),lines{i,1}(:,2),lines{i,1}(:,3),'b')
-    hold on
-    % quiver3(lines{i,1}(:,1),lines{i,1}(:,2),lines{i,1}(:,3),...
-    %     Fu(lines{i,1}(:,1),lines{i,1}(:,2)), Fv(lines{i,1}(:,1),lines{i,1}(:,2)),...
-    %     Fw(lines{i,1}(:,1),lines{i,1}(:,2)),...
-    %     'Color','b','AutoScaleFactor',0.5);
-end
 axis tight
 xlabel('x')
 ylabel('y')

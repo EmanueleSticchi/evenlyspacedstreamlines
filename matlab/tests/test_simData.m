@@ -41,20 +41,10 @@ drawnow
 %% PROCESS ----------------------------------------------------------------
 radius = 1.38e-03; %0.03; % 3 cm  
 lines = evenly_spaced_streamlines(TestData.Geometry.Points,...
-            TestData.Geometry.ConnectivityList,...
+            TestData.Geometry.ConnectivityList(validTriangles,:),...
             [vx,vy,vz],radius,"num_threads",2);
-
-% hold on
-% for i=1:length(lines)
-%     plot3(lines{i}(:,1),lines{i}(:,2),lines{i}(:,3),LineWidth=1,Color=[0 0 0])
-% end
-
 hold on
-Nstreamlines = 25000;
-temp_lines = lines(round(linspace(1,length(lines),Nstreamlines)));
-temp_lines = cellfun(@(c) [c; NaN(1,3)], temp_lines, 'UniformOutput', false);
-temp_lines = vertcat(temp_lines{:});
-p_str_lines = plot3(temp_lines(:,1),temp_lines(:,2),temp_lines(:,3),LineWidth=1,Color=[0 0 0]);
+plot3(lines(:,1),lines(:,2),lines(:,3),LineWidth=1,Color=[0 0 0])
 
 %% FUNCTION
 
