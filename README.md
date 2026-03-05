@@ -101,7 +101,7 @@ For more sophisticated visualizations, the module also provides a function ``str
 
 The code is implemented in C++, interfaced and compiled using cython, and with a wrapper for python (``evenlyspacedstreamlines/wrapper.py``). It was designed for meshes with a number of vertices of the order of 100k and a radius $r$ not too large as compared to mesh edge length.
 
-### Installation
+### Installation (Python)
 
 The package can be installed using the command ``pip install evenlyspacedstreamlines`` (on Windows, a compiler such as Microsoft Visual C++ is required).
 
@@ -110,6 +110,19 @@ If the code is downloaded from github, local installation on Linux is done by ru
 from evenlyspacedstreamlines import test; test()
 ```
 Tested using Anaconda 2023.09 (python 3.11) on Linux and Windows.
+
+### Installation (Matlab)
+
+A MATLAB interface is available in the [`matlab/`](matlab) folder.
+
+Quick start:
+1. Compile the MEX file from inside `matlab/`:
+   ```matlab
+   mex streamlines_uns.cpp CXXFLAGS='$CXXFLAGS -fopenmp' LDFLAGS='$LDFLAGS -fopenmp' -I../evenlyspacedstreamlines
+   ```
+2. Run `matlab/tests/test_wind.m`.
+
+The MATLAB entry point is `evenly_spaced_streamlines.m` and mirrors the Python API. See also Readme file inside `matlab/`.
 
 ### Acknowledgements
 

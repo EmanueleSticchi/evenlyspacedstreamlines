@@ -4,6 +4,8 @@
 #include "triangle.h"
 #include "triangularmesh.h"
 
+#include <string>   // For std::string
+#include <sstream>  // For std::ostringstream
 //-----------------------------------------------------------------------------
 TriangularMesh::TriangularMesh()
 {
@@ -265,7 +267,19 @@ int TriangularMesh::identify_adjacent_triangles()
                 if (t_nb_adjacent_tri[i1] < 3)
                     t_adjacent_tri[3*i1+(t_nb_adjacent_tri[i1]++)] = i2;
                 else
+                {
+                    // Store error information in error_message
+                    std::ostringstream oss;
+                    oss << "Error: Non-manifold geometry detected.\n";
+                    oss << "Triangle " << i1 << " has more than 3 neighbors.\n";
+                    oss << "Neighboring triangle: " << i2 << "\n";
+                    oss << "Vertices of triangle " << i1 << ": "
+                        << tri[3 * i1] << ", " << tri[3 * i1 + 1] << ", " << tri[3 * i1 + 2] << "\n";
+                    oss << "Vertices of triangle " << i2 << ": "
+                        << tri[3 * i2] << ", " << tri[3 * i2 + 1] << ", " << tri[3 * i2 + 2] << "\n";
+                    error_message = oss.str();
                     return -1;
+                }
             }
         }
     }

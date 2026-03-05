@@ -15,6 +15,8 @@ public:
     bool allow_tweaking_orientation; // add noise to the orientation  
                                      // if parallel to an edge
 
+    std::string error_message;
+    
     TriangularMesh();
     ~TriangularMesh();
     

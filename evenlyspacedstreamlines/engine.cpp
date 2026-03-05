@@ -58,6 +58,7 @@ void StreamlineEngine::initialize(int nv_, int nt_, double* ver_, int* tri_,
                               allow_tweaking_orientation);
     if (err < 0) {
         error_code = 3;
+        error_message = mesh.error_message;
     }
     #ifdef DEBUG_STREAMLINES
     mask_filename = (char*) NULL;
