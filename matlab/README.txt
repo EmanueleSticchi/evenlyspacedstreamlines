@@ -30,7 +30,3 @@ Notes
 - When `options.seed_region` is empty (random seeding), rare random failures may occur in MEX.
   The wrapper now retries automatically with `options.max_reruns` attempts (default: 5).
 
-Version-control recommendation
-------------------------------
-Do not commit compiled binaries (e.g., `.mexw64`, `.mexa64`, `.mexmaci64`).
-The repository `.gitignore` includes patterns for these artifacts.

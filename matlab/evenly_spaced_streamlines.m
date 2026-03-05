@@ -111,7 +111,7 @@ end
                 error('Error while calling mex function after %d attempt(s). Last error:\n%s', attempt, ME.message);
             end
 
-            warning('MEX call failed (attempt %d/%d): %s. Retrying...', attempt, max_attempts, ME.message);
+            fprintf('MEX call failed (attempt %d/%d): %s. Retrying...', attempt, max_attempts, ME.message);
         end
     end
 end

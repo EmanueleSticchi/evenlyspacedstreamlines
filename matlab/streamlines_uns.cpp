@@ -2,7 +2,6 @@
 #include "mex.h"
 
 // To compile in matlab: mex streamlines_uns.cpp CXXFLAGS='$CXXFLAGS -fopenmp' LDFLAGS='$LDFLAGS -fopenmp' -I../evenlyspacedstreamlines
-// To run in matlab prova_mex()
 void mexFunction(int nlhs, mxArray* plhs[], int nrhs, const mxArray* prhs[])
 {
     // if (nrhs != 4) {
