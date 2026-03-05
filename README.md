@@ -97,6 +97,20 @@ plt.show()
 ```
 For more sophisticated visualizations, the module also provides a function ``streamlines_to_tubes`` to represent the streamlines as a set of tubes (described by triangulated surfaces).
 
+
+### MATLAB wrapper
+
+A MATLAB interface is available in the [`matlab/`](matlab) folder.
+
+Quick start:
+1. Compile the MEX file from inside `matlab/`:
+   ```matlab
+   mex streamlines_uns.cpp CXXFLAGS='$CXXFLAGS -fopenmp' LDFLAGS='$LDFLAGS -fopenmp' -I../evenlyspacedstreamlines
+   ```
+2. Run `matlab/tests/test_simple.m`.
+
+The MATLAB entry point is `evenly_spaced_streamlines.m` and mirrors the Python API. It also supports automatic reruns when random seeding is used (`seed_region=[]`) through `options.max_reruns` (default: `5`).
+
 ### Implementation
 
 The code is implemented in C++, interfaced and compiled using cython, and with a wrapper for python (``evenlyspacedstreamlines/wrapper.py``). It was designed for meshes with a number of vertices of the order of 100k and a radius $r$ not too large as compared to mesh edge length.

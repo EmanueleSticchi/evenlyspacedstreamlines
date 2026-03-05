@@ -16,6 +16,7 @@ arguments
     options.singularity_mask_radius=0.1;
     options.allow_tweaking_orientation=true;
     options.random_seed=0;
+    options.max_reruns=5;
     options.parallel=true;
     options.num_threads=-1;
 end
@@ -65,6 +66,8 @@ end
     % #         90 degrees (default: True)
     % #     random_seed (int): initialize the seed for pseudo-random number 
     % #         generation (default: seed based on clock)
+    % #     max_reruns (int): maximum number of automatic reruns when random
+    % #         seeding fails while seed_region is empty (default: 5)
     % #     parallel (bool): if True (default), use multithreading wherever 
     % #         implemented
     % #     num_threads (int): if possible, use that number of threads for parallel
@@ -89,15 +92,26 @@ end
     % # ==========================================================================
 
     % # call C extension
-    try 
-        lines = streamlines_uns(...
-            vertices', int32(triangles'-1), orientation', radius,...
-            int32(options.seed_region),options.orthogonal,options.oriented_streamlines,...
-            options.seed_points,options.max_length,options.avoid_u_turns, options.max_angle,...
-            options.singularity_mask_radius, options.allow_tweaking_orientation,...
-            options.random_seed, options.parallel, options.num_threads);
-    catch ME
-        error('Error while calling mex function\n %s\n If seed_region is not assigned, running the function again will likely fix the issue.\n',ME.message);
+    max_attempts = 1;
+    if isempty(options.seed_region)
+        max_attempts = max(1, options.max_reruns);
+    end
+
+    for attempt = 1:max_attempts
+        try
+            lines = streamlines_uns(...
+                vertices', int32(triangles'-1), orientation', radius,...
+                int32(options.seed_region),options.orthogonal,options.oriented_streamlines,...
+                options.seed_points,options.max_length,options.avoid_u_turns, options.max_angle,...
+                options.singularity_mask_radius, options.allow_tweaking_orientation,...
+                options.random_seed, options.parallel, options.num_threads);
+            return
+        catch ME
+            if attempt == max_attempts
+                error('Error while calling mex function after %d attempt(s). Last error:\n%s', attempt, ME.message);
+            end
+
+            warning('MEX call failed (attempt %d/%d): %s. Retrying...', attempt, max_attempts, ME.message);
+        end
     end
 end
-

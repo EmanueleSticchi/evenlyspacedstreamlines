@@ -7,6 +7,9 @@ __pycache__/
 
 # C extensions
 *.so
+*.mexw64
+*.mexa64
+*.mexmaci64
 
 # Distribution / packaging
 .Python
