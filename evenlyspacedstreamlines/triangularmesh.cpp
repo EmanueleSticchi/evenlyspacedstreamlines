@@ -4,8 +4,6 @@
 #include "triangle.h"
 #include "triangularmesh.h"
 
-#include <string>   // For std::string
-#include <sstream>  // For std::ostringstream
 //-----------------------------------------------------------------------------
 TriangularMesh::TriangularMesh()
 {

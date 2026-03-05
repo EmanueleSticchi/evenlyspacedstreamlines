@@ -2,6 +2,8 @@
 #define TRIANGULARMESH_H_
 
 #include <vector>
+#include <string>   // For std::string
+#include <sstream>  // For std::ostringstream
 
 //-----------------------------------------------------------------------------
 class TriangularMesh {
@@ -14,7 +16,6 @@ public:
     bool orthogonal;// rotate orientation by 90 degrees
     bool allow_tweaking_orientation; // add noise to the orientation  
                                      // if parallel to an edge
-
     std::string error_message;
     
     TriangularMesh();
