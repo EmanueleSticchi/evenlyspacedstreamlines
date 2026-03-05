@@ -126,7 +126,7 @@ The MATLAB entry point is `evenly_spaced_streamlines.m` and mirrors the Python A
 
 ### Acknowledgements
 
-This work was supported by the Natural Sciences and Engineering ResearchCouncil of Canada (NSERC grant RGPIN-2020-05252).
+This work was supported by the Natural Sciences and Engineering ResearchCouncil of Canada (NSERC grant RGPIN-2020-05252). Matlab support was implemented by Emanuele Sticchi.
 
 ### References
 
