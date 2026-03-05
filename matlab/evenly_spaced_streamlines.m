@@ -97,7 +97,7 @@ end
             options.singularity_mask_radius, options.allow_tweaking_orientation,...
             options.random_seed, options.parallel, options.num_threads);
     catch ME
-        error('Error while calling mex function\n %f \n',ME.message);
+        error('Error while calling mex function\n %s\n If seed_region is not assigned, running the function again will likely fix the issue.\n',ME.message);
     end
 end
 
